@@ -20,4 +20,4 @@ Box(vmin::Union{AbstractVector,Tuple}, vmax::Union{AbstractVector,Tuple}) = Box(
 minimum(b::Box) = b.vmin
 maximum(b::Box) = b.vmax
 extrema(b::Box) = b.vmin, b.vmax
-∈(x::AbstractVector, b::Box) = all(@. ((b.vmin < x) || isapprox(b.vmin, x; atol=100*eps(Float64))) && ((x < b.vmax) || isapprox(b.vmax, x; atol=100*eps(Float64))))
+∈(x::AbstractVector, b::Box) = all(@. ((b.vmin < x) || isapprox(b.vmin, x; atol=100*eps(Float64))) & ((x < b.vmax) || isapprox(b.vmax, x; atol=100*eps(Float64))))

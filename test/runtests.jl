@@ -30,7 +30,8 @@ using LinearAlgebra
             b = Box((0.,0.,0.), (1.,1.,1.))
     
             @test rand(3)∈b
-            @test (rand(3).+1∉b) && (rand(3).-1∉b)
+            @test rand(3).+1∉b
+            @test rand(3).-1∉b
     
             p = @SVector rand(3)
             direction = zeros(3)
@@ -47,7 +48,9 @@ using LinearAlgebra
             sphere = Sphere(zeros(3), R)
             ray = Ray((@SVector rand(3)), (@SVector randn(3)))
             @test ray.origin∈sphere
-            @test !isnothing(ray∩sphere) && typeof(ray∩sphere)==SVector{3,Float64} && norm(ray∩sphere) ≈ R
+            @test !isnothing(ray∩sphere)
+            @test typeof(ray∩sphere)==SVector{3,Float64}
+            @test norm(ray∩sphere) ≈ R
             
             direction = zeros(3)
             direction[rand((1,2,3))] = rand((-1,1))
@@ -56,7 +59,8 @@ using LinearAlgebra
     
             p_far =  10 .+ (@SVector rand(3))
             ray = Ray(p_far, -p_far)
-            @test !isnothing(ray∩sphere) && length(ray∩sphere)==2
+            @test !isnothing(ray∩sphere)
+            @test  length(ray∩sphere)==2
             ray_neg = Ray(p_far, p_far)
             @test isnothing(ray_neg∩sphere)
         end;
