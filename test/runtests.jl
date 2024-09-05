@@ -70,9 +70,11 @@ using LinearAlgebra
             direction = normalize(@SVector randn(3))
             center = @SVector rand(3)
             las = Laser(σ, direction, center) #laser is pointed to xy plane
-            photons = [sample_source(las) for _ in 1:100000]
-            
-            photons_r = stack((p.r for p in photons))
+        
+            photons_r = Matrix{Float64}(undef, 3, 100000)
+            for i in 1:size(photons_r, 2)
+                photons_r[:, i] = sample_source(las).r
+            end
             
             @test isapprox(vec(mean(photons_r, dims=2)), center, atol=5.e-2) #center is ok
             @test isapprox(mean(sum((photons_r .- center).^2, dims=1)), (√2σ)^2, atol=5.e-2) #σ is ok
