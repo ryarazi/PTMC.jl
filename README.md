@@ -1,6 +1,6 @@
 # PTMC.jl
 
-[![Build Status](https://github.com/ryarazi/PTMC.jl/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/ryarazi/PTMC.jl/actions/workflows/CI.yml?query=branch%3Amaster)
+[![Build Status](https://github.com/ryarazi/PTMC.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/ryarazi/PTMC.jl/actions/workflows/CI.yml?query=branch%3Amain)
 
 PTMC.jl (Photon Transport Monte Carlo) a Julia code based on the Monte Carlo modeling of photon transport in multi-layered tissues (MCML) algorithm. The original MCML algorithm was developed by Wang et al. in 1995 with a C code implementation available at [https://omlc.org/software/mc/](https://omlc.org/software/mc/).
 
