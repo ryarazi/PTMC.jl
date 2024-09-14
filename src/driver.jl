@@ -63,5 +63,3 @@ function simulate_particle(source::Source, scene::Scene, aggregators = nothing; 
     
     return p
 end
-
-simulate_particle()
