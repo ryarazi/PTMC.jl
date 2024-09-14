@@ -8,7 +8,7 @@ propagated through the scene until it exits the system or its weight is zero. Th
 # Arguments
 - `source::Source`: The source from which the particle is sampled.
 - `scene::Scene`: The scene through which the particle is propagated.
-- `aggregators`: A collection of aggregators which collect data during the simulation.
+- `aggregators`: An Aggregator subtype or a collection of Aggregators which collect data during the simulation.
 - `roulette_threshold::Float64`: The threshold at which the particle weight is considered small enough to be terminated.
 - `roulette_chance::Float64`: The probability that a particle is terminated when its weight is below the threshold.
 - `δs::Float64`: The distance to move the particle past the boundary before it is reflected or refracted.
@@ -20,6 +20,7 @@ function simulate_particle(source::Source, scene::Scene, aggregators = nothing; 
     p = sample_source(source)
     solid = find_container(p, scene)
 
+    if isa(aggregators, Aggregator) aggregators = [aggregators] end
     if !isnothing(aggregators) for agg in aggregators create_aggregation(agg, p) end end
     
     while p.weight != 0. && solid != Outside()
@@ -62,3 +63,5 @@ function simulate_particle(source::Source, scene::Scene, aggregators = nothing; 
     
     return p
 end
+
+simulate_particle()
