@@ -10,7 +10,7 @@ module PTMC
     import Plots: plot
     import Base: maximum, minimum, extrema, isapprox, ∈, ∩
 
-    export Laser, Box, Solid, Turbid, Refractive, Scene, HistoryAggregator
+    export GuassianSource, Box, Solid, Turbid, Refractive, Scene, HistoryAggregator
     export simulate_particle
 
     include("linear.jl")
@@ -25,7 +25,7 @@ module PTMC
 
     include("particle.jl")
     include("aggregator.jl")
-    include("laser.jl")
+    include("source.jl")
 
     include("material.jl")
     include("solid.jl")

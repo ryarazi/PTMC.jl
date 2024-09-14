@@ -65,13 +65,13 @@ using LinearAlgebra
             @test isnothing(ray_neg∩sphere)
         end;
     
-        @testset "laser sampling" begin    
+        @testset "source sampling" begin    
             σ = rand() + 0.1
             direction = normalize(@SVector randn(3))
             center = @SVector rand(3)
-            las = Laser(σ, direction, center) #laser is pointed to xy plane
+            source = GuassianSource(σ, direction, center) #source is pointed to xy plane
             
-            photons = [sample_source(las) for _ in 1:100000]
+            photons = [sample_source(source) for _ in 1:100000]
             photons_r = Matrix{Float64}(undef, 3, length(photons))
             for (i, p) in enumerate(photons)
                 photons_r[:, i] = p.r
@@ -194,13 +194,13 @@ using LinearAlgebra
     Nₚ = 100000 #number of particles
     @testset verbose = true "Integral Tests" begin
         @testset "PTMC benchmark - finite slab" begin
-            las = Laser(0.04, [0.,0.,-1.], [0.,0.,0.02]) #laser is pointed in the -̂z direction
+            source = GuassianSource(0.04, [0.,0.,-1.], [0.,0.,0.02]) #source is pointed in the -̂z direction
 
             air = Solid(Box((-5000.,-5000.,0.), (5000.,5000.,0.04)), Turbid(); name="air")
             scatterer = Solid(Box((-5000.,-5000.,-0.02), (5000.,5000.,0.)), Turbid(μₛ=90, μₐ=10, n=1., g=0.75); name="scatterer")
             air2 = Solid(Box((-5000.,-5000.,-0.04), (5000.,5000.,-0.02)), Turbid(); name="air2")
             scene = Scene([air, scatterer, air2])
-            end_particles = [simulate_particle(las, scene) for i in 1:Nₚ]
+            end_particles = [simulate_particle(source, scene) for i in 1:Nₚ]
 
             R = 0.
             T = 0.
@@ -215,12 +215,12 @@ using LinearAlgebra
         end;
 
         @testset "PTMC benchmark - infinite half-slab" begin
-            las = Laser(0.01, [0.,0.,-1.], [0.,0.,0.02]) #laser is pointed in the -̂z direction
+            source = GuassianSource(0.01, [0.,0.,-1.], [0.,0.,0.02]) #source is pointed in the -̂z direction
 
             air = Solid(Box((-5000.,-5000.,0.), (5000.,5000.,0.04)), Turbid(); name="air")
             scatterer = Solid(Box((-5000.,-5000.,-1000.), (5000.,5000.,0.)), Turbid(μₛ=90, μₐ=10, n=1.5, g=0.); name="scatterer")
             scene = Scene([air, scatterer])
-            end_particles = [simulate_particle(las, scene) for i in 1:Nₚ]
+            end_particles = [simulate_particle(source, scene) for i in 1:Nₚ]
 
             R = 0.
             for p in end_particles
